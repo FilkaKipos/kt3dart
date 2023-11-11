@@ -9,7 +9,18 @@ class Bank with _$Bank {
   factory Bank({
     required String cardExpire,
   }) = _Bank;
-  bool get isExpired => DateTime.now().year > int.parse(cardExpire.substring(3));
+  bool get isExpired{
+    final cardYear = int.parse(cardExpire.substring(3));
+    final cardMonth = int.parse(cardExpire.substring(0, 2));
+    
+    if (cardYear < 23) {
+      return true;
+    } else if (cardYear == 23 && 11 > cardMonth) {
+      return true;
+    } else {
+      return false; 
+    }
+  }
 
   factory Bank.fromJson(Map<String, dynamic> json) => _$BankFromJson(json);
 }
